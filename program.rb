@@ -1,15 +1,30 @@
 
-def caesar_cipher(string, key)
-  caesar_string = ''
-  alphabet = ('a'..'z')
-  string.each_char do |letter|
-    key.times { letter = letter.next } if alphabet.include?(letter.downcase)
-    caesar_string += letter
-  end
-  caesar_string
-end
-puts 'Enter the string and the key:'
-text = gets.chomp
-key = Integer(gets)
+$alphabet = ('a'..'z')
+$string = ''
 
-puts caesar_cipher(text, key)
+class CaesarCipher
+  def encryption(text, key)
+    text.each_char do |letter|
+      key.times { letter = letter.next! } if $alphabet.include?(letter.downcase)
+      $string << letter[-1]
+    end
+    $string
+  end
+
+  def decryption(key)
+    string = ''
+    $string.each_char do |letter|
+      (26 - key).times { letter = letter.next } if $alphabet.include?(letter.downcase)
+      string << letter[-1]
+    end
+    string
+  end
+end
+
+file = File.open('text.txt')
+file_data = file.read
+puts 'Enter the key for encryption and decryption:'
+key = Integer(gets)
+text = CaesarCipher.new
+puts "Your text after encryption: #{text.encryption(file_data, key)}"
+puts "Your text after decryption: #{text.decryption(key)}"

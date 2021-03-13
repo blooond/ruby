@@ -1,10 +1,12 @@
-NUMBER = 26
+NUMBERS = 26
 
 class CaesarCipher
   attr_writer :key, :text
 
-  @encrypted_string = ''
-  @decrypted_string = ''
+  def initialize
+    @encrypted_string = ''
+    @decrypted_string = ''
+  end
 
   def encryption
     @text.each_char do |letter|
@@ -16,7 +18,7 @@ class CaesarCipher
 
   def decryption
     @encrypted_string.each_char do |letter|
-      (NUMBER - @key).times { letter = letter.next } if ('a'..'z').include?(letter.downcase)
+      (NUMBERS - @key).times { letter = letter.next } if ('a'..'z').include?(letter.downcase)
       @decrypted_string << letter[-1]
     end
     @decrypted_string
